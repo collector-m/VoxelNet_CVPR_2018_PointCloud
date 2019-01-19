@@ -1,6 +1,6 @@
 # Introduction
 This is an unofficial inplementation of [VoxelNet: End-to-End Learning for Point Cloud Based 3D Object Detection](https://arxiv.org/abs/1711.06396) in PyTorch.
-A large part of this project is based on the work [here](https://github.com/qianguih/voxelnet).
+This project is based on the work (in TensorFlow) [here](https://github.com/qianguih/voxelnet).
 Thanks to [@qianguih](https://github.com/qianguih).
 
 
