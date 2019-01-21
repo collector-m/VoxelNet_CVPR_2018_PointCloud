@@ -7,6 +7,7 @@
 # Last Modified : Fri 19 Jan 2018 01:06:35 PM CST
 # Created By : Jeasine Ma [jeasinema[at]gmail[dot]com]
 
+import os
 from utils.utils import *
 from utils.preprocess import *
 

@@ -30,19 +30,19 @@ parser.add_argument('--lr', type = float, default = 0.01, help = 'initial learni
 parser.add_argument('--alpha', type = float, default = 1.5, help = 'alpha in loss function')
 parser.add_argument('--beta', type = float, default = 1, help = 'beta in loss function')
 
-parser.add_argument('--max_epoch', type = int, default = 160, help = 'max epoch')
-parser.add_argument('--batch_size', type = int, default = 2, help = 'batch size')
+parser.add_argument('--max_epoch', type = int, default = 1, help = 'max epoch')
+parser.add_argument('--batch_size', type = int, default = 1, help = 'batch size')
 parser.add_argument('--workers', type = int, default = 4)
 
-parser.add_argument('--summary_interval', type = int, default = 20, help = 'iter interval for training summary')
-parser.add_argument('--summary_val_interval', type = int, default = 40, help = 'iter interval for val summary')
+parser.add_argument('--summary_interval', type = int, default = 100, help = 'iter interval for training summary')
+parser.add_argument('--summary_val_interval', type = int, default = 200, help = 'iter interval for val summary')
 parser.add_argument('--val_epoch', type = int, default = 10, help = 'epoch interval for dump val data')
 
 parser.add_argument('--log_root', type = str, default = 'log')
 parser.add_argument('--log_name', type = str, default = 'train.txt')
 parser.add_argument('--tag', type = str, default = 'default', help = 'log tag')
 
-parser.add_argument('--print_freq', default = 5, type = int, help = 'print frequency')
+parser.add_argument('--print_freq', default = 20, type = int, help = 'print frequency')
 
 parser.add_argument('--resumed_model', type = str, default = '', help = 'if specified, load the specified model')
 parser.add_argument('--saved_model', type = str, default = 'kitti_{}.pth.tar')
@@ -143,6 +143,7 @@ def run():
                        'cls_neg_loss: {:.4f} forward time: {:.4f} batch time: {:.4f}'.format(
                     counter, epoch + 1, args.max_epoch, loss.item(), reg_loss.item(), cls_loss.item(), cls_pos_loss_rec.item(),
                     cls_neg_loss_rec.item(), forward_time, batch_time)
+                info = '{}\t'.format(time.asctime(time.localtime())) + info
                 print(info)
 
                 # Write training info to log
@@ -200,7 +201,7 @@ def run():
                         is_best, args.saved_model.format(cfg.DETECT_OBJ))
 
         # Dump test data every 10 epochs
-        if (epoch + 1) % args.val_epoch == 0:
+        if (epoch + 1) % args.val_epoch == 0:   # Time consuming
             # Create output folder
             os.makedirs(os.path.join(args.output_path, str(epoch + 1)), exist_ok = True)
             os.makedirs(os.path.join(args.output_path, str(epoch + 1), 'data'), exist_ok = True)
@@ -252,7 +253,7 @@ def run():
 
         tot_epoch = epoch + 1
 
-    print('Train done with total epoch:{}, iter:{}'.format(tot_epoch, model.global_step.eval()))
+    print('Train done with total epoch:{}, iter:{}'.format(tot_epoch, global_counter))
 
     # Close TensorBoardX writer
     summary_writer.close()
