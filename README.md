@@ -18,7 +18,7 @@ Thanks to [@qianguih](https://github.com/qianguih).
 
 2. Compile the Cython module:
 ```bash
-$ python utils\setup.py build_ext --inplace
+$ python utils/setup.py build_ext --inplace
 ```
 
 3. Compile the evaluation code:
